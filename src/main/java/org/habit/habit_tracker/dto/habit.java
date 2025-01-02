@@ -1,5 +1,8 @@
 package org.habit.habit_tracker.dto;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Entity;
@@ -19,7 +22,8 @@ public class habit {
     private String name;
     private String description;
     private String frequency;
-    @DateTimeFormat(pattern = "DD-MM-YYYY HH:mm")
-    private String createdat;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date createdOn;
     
 }

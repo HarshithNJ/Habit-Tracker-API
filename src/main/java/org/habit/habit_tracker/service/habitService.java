@@ -17,20 +17,24 @@ public class habitService {
     @Autowired
     habitRepository repository;
 
-    public ResponseEntity<Object> saveHabit(habit habit) {
-        if(repository.findByName(habit.getName()) != null){
-            repository.save(habit);
+    public ResponseEntity<Object> saveHabit(habit hab) {
+        if(repository.existsByCreatedOn(hab.getCreatedOn())){
+            
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("success", "Record successfully saved");
+            map.put("Data", hab);
+
+            return new ResponseEntity<Object>(map, HttpStatus.BAD_REQUEST);
+            
+        }else{
+
+            repository.save(hab);
 
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("success", "Record successfully saved");
-            map.put("Data", habit);
+            map.put("Data", hab);
 
             return new ResponseEntity<Object>(map, HttpStatus.CREATED);
-        }else{
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("error", "Enter the name of the habit");
-
-            return new ResponseEntity<Object>(map, HttpStatus.BAD_REQUEST);
         }
     }
     

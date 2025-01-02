@@ -17,8 +17,8 @@ public  class habitController{
     habitService service;
 
     @PostMapping("/habits")
-    public ResponseEntity<Object> saveHabit(@RequestBody habit habit){
-        return service.saveHabit(habit);
+    public ResponseEntity<Object> saveHabit(@RequestBody habit hab){
+        return service.saveHabit(hab);
     }
     
 }
