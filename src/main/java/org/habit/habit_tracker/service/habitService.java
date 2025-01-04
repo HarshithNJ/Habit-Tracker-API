@@ -66,8 +66,34 @@ public class habitService {
     }
 
     public ResponseEntity<Object> putMethodName(String id, habit habit) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'putMethodName'");
+        if(repository.findById(id).isPresent()){
+            habit habits = repository.findById(id).get();
+
+            if(habit.getName() != null)
+                habits.setName(habit.getName());
+
+            if(habit.getDescription() != null)
+                habits.setDescription(habit.getDescription());
+
+            if(habit.getFrequency() != null)
+                habits.setFrequency(habit.getFrequency());
+
+            if(habit.getCreatedOn() != null)
+                habits.setCreatedOn(habit.getCreatedOn());
+
+            repository.save(habits);
+
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("success", "Data Updated Successfully");
+            map.put("Data", habits);
+
+            return new ResponseEntity<Object>(map, HttpStatus.OK);
+        }else{
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("error", "No Data Found with the id: " + id);
+
+            return new ResponseEntity<Object>(map, HttpStatus.NO_CONTENT);
+        }
     }
 
     
